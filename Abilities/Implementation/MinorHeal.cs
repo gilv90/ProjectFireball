@@ -1,18 +1,36 @@
+using System.Collections.Generic;
+using System.Linq;
+using Godot;
 using ProjectFireball.Characters;
+using ProjectFireball.Effects.Implementation;
 
 namespace ProjectFireball.Abilities.Implementation;
 
-public class MinorHeal() : Ability(3), IHeal
+[GlobalClass]
+public partial class MinorHeal : Ability
 {
-    protected override void ExecuteImplementation(Character character, Character target)
+    public MinorHeal()
     {
-        target.Heal(character.Damage.Value * 1);
+        AbilityName = "Minor Heal";
+        Cooldown = 3;
+        MaxTargets = 1;
+
+        Effects =
+        [
+            new HealEffect()
+            {
+                Name = "Minor Heal Healing",
+                Multiplier = 2
+            }
+        ];
     }
 
-    public override bool CanExecute(Character target)
+    public override void PlayAbilityAnimation(Character user, List<Character> targets)
     {
-        if (target.CurrentHealth == 0)
-            return false;
-        return RemainingCooldown == 0;
+        var validTargets = targets.Take(MaxTargets);
+        foreach (var target in validTargets)
+        {
+            target.FlashGreen();
+        }
     }
 }

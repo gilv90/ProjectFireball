@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MinorHeal" load_steps=5 format=3 uid="uid://b0xbd2r1b2bgw"]
+
+[ext_resource type="Script" uid="uid://dwottxwveklb" path="res://Effects/Effect.cs" id="1_ktmea"]
+[ext_resource type="Script" uid="uid://drodunjrrr1br" path="res://Abilities/Implementation/MinorHeal.cs" id="2_ga5fm"]
+[ext_resource type="Script" uid="uid://4726dx6ddr54" path="res://Effects/Implementation/HealEffect.cs" id="2_pbqtp"]
+
+[sub_resource type="Resource" id="Resource_sw32u"]
+script = ExtResource("2_pbqtp")
+Multiplier = 2
+Name = "Effect"
+metadata/_custom_type_script = "uid://4726dx6ddr54"
+
+[resource]
+script = ExtResource("2_ga5fm")
+AbilityName = "Minor Heal"
+RemainingCooldown = 0
+Cooldown = 3
+MaxTargets = 1
+Effects = Array[ExtResource("1_ktmea")]([SubResource("Resource_sw32u")])
+metadata/_custom_type_script = "uid://drodunjrrr1br"

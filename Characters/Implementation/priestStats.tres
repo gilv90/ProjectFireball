@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StartingStats" load_steps=2 format=3 uid="uid://il7p75xjek2l"]
+
+[ext_resource type="Script" uid="uid://vl3lu0mnbxxc" path="res://Characters/StartingStats.cs" id="1_eps6t"]
+
+[resource]
+script = ExtResource("1_eps6t")
+Speed = 10
+MaxHealth = 70
+Damage = 10
+Armor = 5
+metadata/_custom_type_script = "uid://vl3lu0mnbxxc"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HealWoundedAlly" load_steps=3 format=3 uid="uid://blae0bqxu7d6q"]
+
+[ext_resource type="Resource" uid="uid://b0xbd2r1b2bgw" path="res://Abilities/Implementation/minorHeal.tres" id="1_gywur"]
+[ext_resource type="Script" uid="uid://bdrnso6xaqgjk" path="res://Instructions/Implementation/HealWoundedAlly.cs" id="2_nnhdp"]
+
+[resource]
+script = ExtResource("2_nnhdp")
+Ability = ExtResource("1_gywur")
+metadata/_custom_type_script = "uid://bdrnso6xaqgjk"

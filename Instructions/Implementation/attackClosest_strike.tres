@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AttackClosest" load_steps=3 format=3 uid="uid://c0fl81q4jmlbu"]
+
+[ext_resource type="Resource" uid="uid://h1ammeg0xn43" path="res://Abilities/Implementation/strike.tres" id="1_eup2n"]
+[ext_resource type="Script" uid="uid://cb0aibg1vp5pm" path="res://Instructions/Implementation/AttackClosest.cs" id="1_je1ya"]
+
+[resource]
+script = ExtResource("1_je1ya")
+Ability = ExtResource("1_eup2n")
+metadata/_custom_type_script = "uid://cb0aibg1vp5pm"

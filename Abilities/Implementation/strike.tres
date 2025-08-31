@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Strike" load_steps=5 format=3 uid="uid://h1ammeg0xn43"]
+
+[ext_resource type="Script" uid="uid://dwottxwveklb" path="res://Effects/Effect.cs" id="1_t87qd"]
+[ext_resource type="Script" uid="uid://daw1t82ylqvp1" path="res://Abilities/Implementation/Strike.cs" id="2_6chir"]
+[ext_resource type="Script" uid="uid://c65t0t3i1fg7q" path="res://Effects/Implementation/DamageEffect.cs" id="2_wqi0j"]
+
+[sub_resource type="Resource" id="Resource_wpt7i"]
+script = ExtResource("2_wqi0j")
+Multiplier = 1
+Name = "DamageEffect"
+metadata/_custom_type_script = "uid://c65t0t3i1fg7q"
+
+[resource]
+script = ExtResource("2_6chir")
+AbilityName = "Strike"
+RemainingCooldown = 0
+Cooldown = 0
+MaxTargets = 1
+Effects = Array[ExtResource("1_t87qd")]([SubResource("Resource_wpt7i")])
+metadata/_custom_type_script = "uid://daw1t82ylqvp1"

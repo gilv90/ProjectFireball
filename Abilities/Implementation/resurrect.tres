@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Resurrect" load_steps=5 format=3 uid="uid://b2so2xvmempm0"]
+
+[ext_resource type="Script" uid="uid://dwottxwveklb" path="res://Effects/Effect.cs" id="1_cv53c"]
+[ext_resource type="Script" uid="uid://groexsy45lr7" path="res://Abilities/Implementation/Resurrect.cs" id="2_r3ycb"]
+[ext_resource type="Script" uid="uid://5jmv0ot2cwtd" path="res://Effects/Implementation/ResurrectEffect.cs" id="2_tc8sg"]
+
+[sub_resource type="Resource" id="Resource_3oirs"]
+script = ExtResource("2_tc8sg")
+Multiplier = 2
+Name = "ResurrectEffect"
+metadata/_custom_type_script = "uid://5jmv0ot2cwtd"
+
+[resource]
+script = ExtResource("2_r3ycb")
+AbilityName = "Resurrect"
+RemainingCooldown = 0
+Cooldown = 8
+MaxTargets = 1
+Effects = Array[ExtResource("1_cv53c")]([SubResource("Resource_3oirs")])
+metadata/_custom_type_script = "uid://groexsy45lr7"

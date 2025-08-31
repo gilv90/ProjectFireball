@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="InstructionList" load_steps=7 format=3 uid="uid://bslm5u6kjat4r"]
+
+[ext_resource type="Resource" uid="uid://dvdjfk6065m40" path="res://Abilities/Implementation/heavyStrike.tres" id="1_3vefp"]
+[ext_resource type="Script" uid="uid://bjvl2m3lrssli" path="res://Characters/InstructionList.cs" id="1_f5tdk"]
+[ext_resource type="Script" uid="uid://cb0aibg1vp5pm" path="res://Instructions/Implementation/AttackClosest.cs" id="2_0f16y"]
+[ext_resource type="Resource" uid="uid://h1ammeg0xn43" path="res://Abilities/Implementation/strike.tres" id="3_hvkix"]
+
+[sub_resource type="Resource" id="Resource_i120p"]
+script = ExtResource("2_0f16y")
+Ability = ExtResource("1_3vefp")
+metadata/_custom_type_script = "uid://cb0aibg1vp5pm"
+
+[sub_resource type="Resource" id="Resource_16eor"]
+script = ExtResource("2_0f16y")
+Ability = ExtResource("3_hvkix")
+metadata/_custom_type_script = "uid://cb0aibg1vp5pm"
+
+[resource]
+script = ExtResource("1_f5tdk")
+Instructions = Array[Resource]([SubResource("Resource_i120p"), SubResource("Resource_16eor")])
+metadata/_custom_type_script = "uid://bjvl2m3lrssli"

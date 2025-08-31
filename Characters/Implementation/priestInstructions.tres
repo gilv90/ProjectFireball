@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="InstructionList" load_steps=11 format=3 uid="uid://b2krifaj3t8xt"]
+
+[ext_resource type="Script" uid="uid://bjvl2m3lrssli" path="res://Characters/InstructionList.cs" id="1_4xn04"]
+[ext_resource type="Resource" uid="uid://b2so2xvmempm0" path="res://Abilities/Implementation/resurrect.tres" id="1_kh3kk"]
+[ext_resource type="Script" uid="uid://bdrnso6xaqgjk" path="res://Instructions/Implementation/HealWoundedAlly.cs" id="2_1dubu"]
+[ext_resource type="Script" uid="uid://chs5lqqfsn4ba" path="res://Instructions/Implementation/ResurrectAlly.cs" id="2_txtba"]
+[ext_resource type="Resource" uid="uid://b0xbd2r1b2bgw" path="res://Abilities/Implementation/minorHeal.tres" id="3_txtba"]
+[ext_resource type="Resource" uid="uid://h1ammeg0xn43" path="res://Abilities/Implementation/strike.tres" id="4_m2gjt"]
+[ext_resource type="Script" uid="uid://cb0aibg1vp5pm" path="res://Instructions/Implementation/AttackClosest.cs" id="5_6n6ue"]
+
+[sub_resource type="Resource" id="Resource_m2gjt"]
+script = ExtResource("2_txtba")
+Ability = ExtResource("1_kh3kk")
+metadata/_custom_type_script = "uid://chs5lqqfsn4ba"
+
+[sub_resource type="Resource" id="Resource_lr5gv"]
+script = ExtResource("2_1dubu")
+Ability = ExtResource("3_txtba")
+metadata/_custom_type_script = "uid://bdrnso6xaqgjk"
+
+[sub_resource type="Resource" id="Resource_d2sna"]
+script = ExtResource("5_6n6ue")
+Ability = ExtResource("4_m2gjt")
+metadata/_custom_type_script = "uid://cb0aibg1vp5pm"
+
+[resource]
+script = ExtResource("1_4xn04")
+Instructions = Array[Object]([SubResource("Resource_m2gjt"), SubResource("Resource_lr5gv"), SubResource("Resource_d2sna")])
+metadata/_custom_type_script = "uid://bjvl2m3lrssli"

@@ -1,0 +1,33 @@
+[gd_scene load_steps=11 format=3 uid="uid://b54suwkn67q3c"]
+
+[ext_resource type="PackedScene" uid="uid://blrrr0di72d0i" path="res://Characters/character.tscn" id="1_dknqh"]
+[ext_resource type="Resource" uid="uid://c50n347bibrt4" path="res://Characters/Implementation/mageStats.tres" id="2_ksh76"]
+[ext_resource type="Resource" uid="uid://prirj6pge5vb" path="res://Abilities/Implementation/fireball.tres" id="3_6tig6"]
+[ext_resource type="Script" uid="uid://cb0aibg1vp5pm" path="res://Instructions/Implementation/AttackClosest.cs" id="4_iucd0"]
+[ext_resource type="Resource" uid="uid://h1ammeg0xn43" path="res://Abilities/Implementation/strike.tres" id="5_7hf31"]
+[ext_resource type="Script" uid="uid://bjvl2m3lrssli" path="res://Characters/InstructionList.cs" id="6_tc5ip"]
+[ext_resource type="Texture2D" uid="uid://bx7ns36orwcsi" path="res://assets/chr_pawn_mage.png" id="7_f681h"]
+
+[sub_resource type="Resource" id="Resource_mvn3l"]
+script = ExtResource("4_iucd0")
+Ability = ExtResource("3_6tig6")
+metadata/_custom_type_script = "uid://cb0aibg1vp5pm"
+
+[sub_resource type="Resource" id="Resource_khing"]
+script = ExtResource("4_iucd0")
+Ability = ExtResource("5_7hf31")
+metadata/_custom_type_script = "uid://cb0aibg1vp5pm"
+
+[sub_resource type="Resource" id="Resource_sr6hy"]
+script = ExtResource("6_tc5ip")
+Instructions = Array[Object]([SubResource("Resource_mvn3l"), SubResource("Resource_khing")])
+metadata/_custom_type_script = "uid://bjvl2m3lrssli"
+
+[node name="Mage" instance=ExtResource("1_dknqh")]
+StartingStats = ExtResource("2_ksh76")
+InstructionList = SubResource("Resource_sr6hy")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("7_f681h")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 128)

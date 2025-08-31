@@ -23,7 +23,7 @@ public class Stat
                     percentSum += mod.Value;
             }
 
-            finalValue *= 1 + percentSum;
+            finalValue = (int)(finalValue * (1 + percentSum / 100f));
             return finalValue;
         }
     }

@@ -19,7 +19,7 @@ public class ReactiveArmor(Character character) : Passive
     {
         if (damageTaken.Character == character)
         {
-            character.Armor.AddModifier(new StatModifier(1, ModifierType.Flat, this));
+            character.Stats.Armor.AddModifier(new StatModifier(1, ModifierType.Flat, this));
             // Console.WriteLine($"Reactive Armor increases {character.Name}'s armor to {character.Armor.Value}");
         }
     }

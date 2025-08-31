@@ -1,16 +1,37 @@
+using System.Collections.Generic;
+using System.Linq;
+using Godot;
 using ProjectFireball.Characters;
+using ProjectFireball.Effects;
+using ProjectFireball.Effects.Implementation;
 
 namespace ProjectFireball.Abilities.Implementation;
 
-public class Fireball() : Ability(5), IAttack
+[GlobalClass]
+public partial class Fireball : Ability
 {
-    protected override void ExecuteImplementation(Character character, Character target)
+    public Fireball()
     {
-        target.TakeDamage(character.Damage.Value * 3);
+        AbilityName = "Fireball";
+        Cooldown = 5;
+        MaxTargets = 1;
+
+        Effects =
+        [
+            new DamageEffect()
+            {
+                Name = "Fireball Damage",
+                Multiplier = 3
+            }
+        ];
     }
 
-    public override bool CanExecute(Character target)
+    public override void PlayAbilityAnimation(Character user, List<Character> targets)
     {
-        return RemainingCooldown == 0;
+        var validTargets = targets.Take(MaxTargets);
+        foreach (var target in validTargets)
+        {
+            target.FlashRed();
+        }
     }
 }

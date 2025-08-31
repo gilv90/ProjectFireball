@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="HeavyStrike" load_steps=5 format=3 uid="uid://dvdjfk6065m40"]
+
+[ext_resource type="Script" uid="uid://dwottxwveklb" path="res://Effects/Effect.cs" id="1_h0mrf"]
+[ext_resource type="Script" uid="uid://5wtkv06ufmch" path="res://Abilities/Implementation/HeavyStrike.cs" id="2_vseyc"]
+[ext_resource type="Script" uid="uid://c65t0t3i1fg7q" path="res://Effects/Implementation/DamageEffect.cs" id="2_w058s"]
+
+[sub_resource type="Resource" id="Resource_rj2v4"]
+script = ExtResource("2_w058s")
+Multiplier = 2
+Name = "DamageEffect"
+metadata/_custom_type_script = "uid://c65t0t3i1fg7q"
+
+[resource]
+script = ExtResource("2_vseyc")
+AbilityName = "Heavy Strike"
+RemainingCooldown = 0
+Cooldown = 3
+MaxTargets = 1
+Effects = Array[ExtResource("1_h0mrf")]([SubResource("Resource_rj2v4")])
+metadata/_custom_type_script = "uid://5wtkv06ufmch"

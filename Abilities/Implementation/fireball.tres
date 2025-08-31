@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Fireball" load_steps=5 format=3 uid="uid://prirj6pge5vb"]
+
+[ext_resource type="Script" uid="uid://dwottxwveklb" path="res://Effects/Effect.cs" id="1_0l648"]
+[ext_resource type="Script" uid="uid://d20urqsl1667u" path="res://Abilities/Implementation/Fireball.cs" id="2_1ldq7"]
+[ext_resource type="Script" uid="uid://c65t0t3i1fg7q" path="res://Effects/Implementation/DamageEffect.cs" id="2_bburg"]
+
+[sub_resource type="Resource" id="Resource_tq3et"]
+script = ExtResource("2_bburg")
+Multiplier = 3
+Name = "DamageEffect"
+metadata/_custom_type_script = "uid://c65t0t3i1fg7q"
+
+[resource]
+script = ExtResource("2_1ldq7")
+AbilityName = "Fireball"
+RemainingCooldown = 0
+Cooldown = 5
+MaxTargets = 1
+Effects = Array[ExtResource("1_0l648")]([SubResource("Resource_tq3et")])
+metadata/_custom_type_script = "uid://d20urqsl1667u"

@@ -6,7 +6,7 @@ public class Burning(Character character) :  StatusEffect, IDebuff
 {
     public override void Execute()
     {
-        character.TakePureDamage((int)(character.MaxHealth.Value * 0.05));
+        character.TakePureDamage((int)(character.Stats.MaxHealth.Value * 0.05));
         ReduceDuration();
     }
 }

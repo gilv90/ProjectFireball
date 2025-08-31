@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5x0a87n3hlrq"]
+
+[ext_resource type="PackedScene" uid="uid://blrrr0di72d0i" path="res://Characters/character.tscn" id="1_sv0v1"]
+[ext_resource type="Resource" uid="uid://csaeuorjhcuvc" path="res://Characters/Implementation/warriorStats.tres" id="2_ibrfm"]
+[ext_resource type="Texture2D" uid="uid://dck761ytn1s42" path="res://assets/chr_pawn_knight.png" id="2_op67e"]
+[ext_resource type="Resource" uid="uid://bslm5u6kjat4r" path="res://Characters/Implementation/warriorInstructions.tres" id="3_ibrfm"]
+
+[node name="Warrior" instance=ExtResource("1_sv0v1")]
+StartingStats = ExtResource("2_ibrfm")
+InstructionList = ExtResource("3_ibrfm")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_op67e")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 128)

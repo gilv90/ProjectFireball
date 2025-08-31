@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -16,34 +17,35 @@ namespace ProjectFireball.Characters;
 [JsonDerivedType(typeof(Mage), nameof(Mage))]
 [JsonDerivedType(typeof(Warrior), nameof(Warrior))]
 [JsonDerivedType(typeof(Priest), nameof(Priest))]
-public abstract partial class Character : Node2D
+public partial class Character : Node2D
 {
-    public Node2D Visual { get; set; }
-    [Export] 
-    public PackedScene Scene;
-    public int CurrentHealth { get; private set; }
+    [Export] public StartingStats StartingStats { get; set; }
+    [Export] public InstructionList InstructionList { get; set; }
 
+    public Vector2I GridPosition { get; set; }
+    public Stats Stats { get; private set; }
     public List<StatusEffect> StatusEffects { get; set; } = [];
-    public int Priority { get; set; }
+    public List<Passive> Passives { get; set; } = [];
 
-    public Stat Speed { get; set; }
+    public List<Instruction> Instructions { get; set; } = [];
 
-    public Stat MaxHealth { get; set; }
-
-    public Stat Damage { get; set; }
-
-    public Stat Armor { get; set; }
-
-    public List<Ability> Abilities { get; set; }
-    public List<Passive> Passives { get; set; }
-
-    public List<Instruction> Instructions { get; set; }
+    public override void _Ready()
+    {
+        Stats = GetNode<Stats>("Stats");
+        Stats.Initialize(StartingStats);
+        
+        Instructions = InstructionList.Instructions.ToList();
+        
+        Passives.ForEach(p => p.Activate());
+    }
 
     public void TakeTurn(Battle battle)
     {
         var instruction = Instructions.FirstOrDefault(i => i.CanExecute(this, battle));
+        
         if (instruction != null)
         {
+            GD.Print(instruction.Name);
             instruction.Execute(this, battle);
             EventBroker.Publish(new AbilityUsed(instruction.Ability));
         }
@@ -58,34 +60,27 @@ public abstract partial class Character : Node2D
         }
         StatusEffects = StatusEffects.Where(b => b.RemainingDuration > 0).ToList();
 
-        Abilities.ForEach(a => a.ReduceCooldown());
-        Priority = 0;
+        Instructions.ForEach(i => i.Ability.ReduceCooldown());
+        Stats.Priority = 0;
     }
 
     public void Tick()
     {
-        if (CurrentHealth > 0)
-            Priority += Speed.Value;
-    }
-
-    protected void Initialize()
-    {
-        CurrentHealth = MaxHealth.Value;
-        Passives.ForEach(p => p.Activate());
+        if (Stats == null) return;
+        if (Stats.CurrentHealth > 0)
+            Stats.Priority += Stats.Speed.Value;
     }
 
     public void TakeDamage(int damage)
     {
-        var mitigatedDamage = damage / (1 + (Armor.Value / (decimal)10));
-        CurrentHealth -= (int)mitigatedDamage;
-        
-        if (CurrentHealth <= 0)
-            CurrentHealth = 0;
+        var mitigatedDamage = damage / (1 + (Stats.Armor.Value / (decimal)10));
+        Stats.CurrentHealth = Math.Clamp(Stats.CurrentHealth - (int)mitigatedDamage, 0, Stats.MaxHealth.Value);
         
         EventBroker.Publish(new DamageTaken(this, damage));
 
-        if (CurrentHealth <= 0)
+        if (Stats.CurrentHealth <= 0)
         {
+            Stats.IsDead = true;
             EventBroker.Publish(new CharacterDefeated(this));
             GD.Print($"{Name} has been defeated.");
         }
@@ -93,62 +88,57 @@ public abstract partial class Character : Node2D
 
     public void TakePureDamage(int damage)
     {
-        CurrentHealth -= damage;
+        Stats.CurrentHealth -= damage;
     }
 
     public void Heal(int heal)
     {
-        CurrentHealth += heal;
-        if (CurrentHealth > MaxHealth.Value)
-            CurrentHealth = MaxHealth.Value;
+        Stats.CurrentHealth = Math.Clamp(Stats.CurrentHealth + heal, 0, Stats.MaxHealth.Value);
+        
+        if (Stats.CurrentHealth > 0)
+            Stats.IsDead = false;
     }
     
     public void Jump(float height = 40f, float duration = 0.3f)
     {
-        if (Visual == null) return;
-
-        var tween = Visual.GetTree().CreateTween();
-        var originalY = Visual.Position.Y;
+        var tween = GetTree().CreateTween();
+        var originalY = Position.Y;
 
         // Jump up
-        tween.TweenProperty(Visual, "position:y", originalY - height, duration / 2)
+        tween.TweenProperty(this, "position:y", originalY - height, duration / 2)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.Out);
 
         // Come down
-        tween.TweenProperty(Visual, "position:y", originalY, duration / 2)
+        tween.TweenProperty(this, "position:y", originalY, duration / 2)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.In);
     }
     
     public void Lunge(float distance = 20f, float duration = 0.2f)
     {
-        if (Visual == null) return;
+        var tween = GetTree().CreateTween();
+        var originalX = Position.X;
 
-        var tween = Visual.GetTree().CreateTween();
-        var originalX = Visual.Position.X;
-
-        tween.TweenProperty(Visual, "position:x", originalX + distance, duration / 2)
+        tween.TweenProperty(this, "position:x", originalX + distance, duration / 2)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.Out);
 
-        tween.TweenProperty(Visual, "position:x", originalX, duration / 2)
+        tween.TweenProperty(this, "position:x", originalX, duration / 2)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.In);
     }
     
     public void FlashRed(float duration = 0.2f)
     {
-        if (Visual == null) return;
-
         // Get the Sprite2D inside the Visual node
-        if (Visual.GetNodeOrNull<Sprite2D>("Sprite2D") is not Sprite2D sprite) return;
+        if (GetNodeOrNull<Sprite2D>("Sprite2D") is not Sprite2D sprite) return;
 
         Color originalColor = sprite.Modulate;
         Color redColor = new Color(1f, 0f, 0f, 1f);
 
         // Create a Tween from the scene tree
-        var tween = Visual.GetTree().CreateTween();
+        var tween = GetTree().CreateTween();
 
         // Tween to red
         tween.TweenProperty(sprite, "modulate", redColor, duration / 2)
@@ -164,16 +154,14 @@ public abstract partial class Character : Node2D
     
     public void FlashGreen(float duration = 0.2f)
     {
-        if (Visual == null) return;
-
         // Get the Sprite2D inside the Visual node
-        if (Visual.GetNodeOrNull<Sprite2D>("Sprite2D") is not Sprite2D sprite) return;
+        if (GetNodeOrNull<Sprite2D>("Sprite2D") is not Sprite2D sprite) return;
 
         Color originalColor = sprite.Modulate;
         Color greenColor = new Color(0f, 1f, 0f, 1f);
 
         // Create a Tween from the scene tree
-        var tween = Visual.GetTree().CreateTween();
+        var tween = GetTree().CreateTween();
 
         // Tween to red
         tween.TweenProperty(sprite, "modulate", greenColor, duration / 2)

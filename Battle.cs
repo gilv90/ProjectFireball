@@ -22,6 +22,6 @@ public class Battle
 
     public bool IsBattleOver()
     {
-        return Allies.All(c => c.CurrentHealth <= 0) || Enemies.All(c => c.CurrentHealth <= 0);
+        return Allies.All(c => c.Stats.CurrentHealth <= 0) || Enemies.All(c => c.Stats.CurrentHealth <= 0);
     }
 }

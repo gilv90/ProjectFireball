@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcqn4i4rd6wg5"]
+
+[ext_resource type="PackedScene" uid="uid://blrrr0di72d0i" path="res://Characters/character.tscn" id="1_dg252"]
+[ext_resource type="Resource" uid="uid://il7p75xjek2l" path="res://Characters/Implementation/priestStats.tres" id="2_284k4"]
+[ext_resource type="Texture2D" uid="uid://ct2apkj7ula6i" path="res://assets/chr_pawn_chemist.png" id="2_y8jbr"]
+[ext_resource type="Resource" uid="uid://b2krifaj3t8xt" path="res://Characters/Implementation/priestInstructions.tres" id="3_1ynsq"]
+
+[node name="Priest" instance=ExtResource("1_dg252")]
+StartingStats = ExtResource("2_284k4")
+InstructionList = ExtResource("3_1ynsq")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_y8jbr")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 128)

@@ -1,42 +1,47 @@
+using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Godot;
 using ProjectFireball.Abilities.Implementation;
 using ProjectFireball.Characters;
+using ProjectFireball.Effects;
+using System.Linq;
+using Godot.Collections;
 
 namespace ProjectFireball.Abilities;
 
 [JsonDerivedType(typeof(Fireball), nameof(Fireball))]
 [JsonDerivedType(typeof(Strike), nameof(Strike))]
 [JsonDerivedType(typeof(HeavyStrike), nameof(HeavyStrike))]
-public abstract class Ability(int cooldown) : IAbility
+[GlobalClass]
+public abstract partial class Ability : Resource
 {
-    public void Execute(Character character, Character target)
+    [Export] public string AbilityName { get; set; } = "Ability";
+    [Export] public int RemainingCooldown { get; set; }
+    [Export] public int Cooldown { get; set; } = 1;
+    [Export] public int MaxTargets { get; set; } = 1;
+    [Export] public Array<Effect> Effects { get; set; } = [];
+    
+    // Virtual method for ability-specific visual effects
+    public abstract void PlayAbilityAnimation(Character user, List<Character> targets);
+
+    public void ApplyEffects(Character user, List<Character> targets)
     {
-        ExecuteImplementation(character, target);
-        RemainingCooldown = Cooldown;
+        var validTargets = targets.Take(MaxTargets);
+
+        foreach (var target in validTargets)
+        {
+            GD.Print($"Use {AbilityName} on {target.Name}.");
+            foreach (var effect in Effects)
+            {
+                if (effect.CanApply(user, target))
+                    effect.Apply(user, target);
+            }
+        }
     }
     
-    protected abstract void ExecuteImplementation(Character character, Character target);
-    public abstract bool CanExecute(Character target);
-
     public void ReduceCooldown(int turns = 1)
     {
-        if (RemainingCooldown <= turns)
-            RemainingCooldown = 0;
-        else
-            RemainingCooldown -= turns;
+        RemainingCooldown = Math.Clamp(RemainingCooldown - turns, 0, Cooldown);
     }
-
-    public void IncreaseCooldown(int turns)
-    {
-        RemainingCooldown += turns;
-    }
-
-    public int RemainingCooldown { get; private set; }
-    public int Cooldown { get; } = cooldown;
-}
-
-public interface IAbility
-{
-    public void Execute(Character character, Character target);
-    public bool CanExecute(Character target);
 }

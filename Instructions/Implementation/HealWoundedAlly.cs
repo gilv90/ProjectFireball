@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using ProjectFireball.Abilities;
@@ -5,27 +6,30 @@ using ProjectFireball.Characters;
 
 namespace ProjectFireball.Instructions.Implementation;
 
-public class HealWoundedAlly(IHeal ability) : Instruction(ability)
+[GlobalClass]
+public partial class HealWoundedAlly : Instruction
 {
+    public HealWoundedAlly()
+    {
+        Name = "Heal Wounded Ally";
+    }
+
+    public override List<Character> DetermineTargets(Character user, Battle battle)
+    {
+        return battle.GetAllies(user)
+            .Where(a => a.Stats.CurrentHealth < a.Stats.MaxHealth.Value && !a.Stats.IsDead)
+            .OrderBy(a => a.Stats.CurrentHealth / a.Stats.MaxHealth.Value).ToList();
+    }
+
+    public override void PlayInstructionAnimation(Character user, List<Character> targets)
+    {
+        user.Jump();
+    }
+
     public override bool CanExecute(Character character, Battle battle)
     {
-        return DetermineTarget(character, battle) is not null;
-    }
-
-    public override void Execute(Character character, Battle battle)
-    {
-        character.Jump();
-        var target = DetermineTarget(character, battle);
-        GD.Print($"{character.Name} uses {Ability.GetType().Name} on {target.Name}.");
-        Ability.Execute(character, target);
-        GD.Print($"{target.Name} has {target.CurrentHealth} health left.");
-    }
-
-    private Character DetermineTarget(Character character, Battle battle)
-    {
-        return battle.GetAllies(character)
-            .Where(a => Ability.CanExecute(a))
-            .OrderBy(a => a.CurrentHealth / a.MaxHealth.Value)
-            .FirstOrDefault();
+        var hasValidTarget = DetermineTargets(character, battle).Count != 0;
+        var hasCooldown = Ability.RemainingCooldown == 0;
+        return hasValidTarget && hasCooldown;
     }
 }
