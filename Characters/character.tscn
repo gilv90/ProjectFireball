@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://blrrr0di72d0i"]
+[gd_scene load_steps=8 format=3 uid="uid://blrrr0di72d0i"]
 
 [ext_resource type="Script" uid="uid://duc6m0hb5k8bg" path="res://Characters/UI/PriorityBar.cs" id="1_acr0g"]
 [ext_resource type="Script" uid="uid://d3i5rdu40ieeh" path="res://Characters/Character.cs" id="1_ticvp"]
 [ext_resource type="Script" uid="uid://360o66eulyth" path="res://Characters/Stats.cs" id="3_d1l3k"]
+[ext_resource type="Script" uid="uid://dsbpc2rsjaphv" path="res://Characters/UI/HealthBar.cs" id="4_dk5p5"]
 [ext_resource type="Script" uid="uid://dwunn22pqx3bc" path="res://Characters/UI/HealthLabel.cs" id="5_d1l3k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2esnv"]
+bg_color = Color(0, 0.6, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1l3k"]
+bg_color = Color(0, 1, 0, 1)
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_ticvp")
@@ -28,8 +35,16 @@ alignment = 1
 
 [node name="PriorityBar" type="ProgressBar" parent="InterfaceAnchor/VBoxContainer" node_paths=PackedStringArray("_stats")]
 layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_2esnv")
 show_percentage = false
 script = ExtResource("1_acr0g")
+_stats = NodePath("../../../Stats")
+
+[node name="HealthBar" type="ProgressBar" parent="InterfaceAnchor/VBoxContainer" node_paths=PackedStringArray("_stats")]
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_d1l3k")
+show_percentage = false
+script = ExtResource("4_dk5p5")
 _stats = NodePath("../../../Stats")
 
 [node name="HealthLabel" type="Label" parent="InterfaceAnchor/VBoxContainer" node_paths=PackedStringArray("_stats")]
