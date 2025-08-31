@@ -19,7 +19,7 @@ PriestScene = ExtResource("4_6t8i5")
 TileMapLayer = NodePath("../TileMapLayer")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAFAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAALAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAARAAIAAAAAAAAAAAAFAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAARAAgAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAFAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAALAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAARAAIAAAAAAAAAAAAFAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAARAAkAAAAAAAAAAAA=")
 tile_set = ExtResource("5_6t8i5")
 
 [node name="Log" type="RichTextLabel" parent="."]
@@ -27,9 +27,6 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1080.0
-offset_right = 1.0
-offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 24

@@ -26,7 +26,7 @@ public partial class BattleController : Node
         
         var usedCells = TileMapLayer.GetUsedCells();
         var allyCells = usedCells.Where(c => c.Y == 2).ToList();
-        var enemyCells = usedCells.Where(c => c.Y == 8).ToList();
+        var enemyCells = usedCells.Where(c => c.Y == 9).ToList();
         if (usedCells.Count == 0)
         {
             GD.PrintErr("No used cells found on TileMap; cannot spawn characters.");
@@ -38,7 +38,6 @@ public partial class BattleController : Node
         {
             PlaceCharacter(allyCells[index], ally, AlliesContainer);
             index++;
-            // AlliesContainer.AddChild(ally);
             
         }
 
@@ -46,18 +45,8 @@ public partial class BattleController : Node
         // Spawn enemies
         foreach (var enemy in _battle.Enemies)
         {
-            // Node2D node2DInstance = enemy.Scene.Instantiate<Node2D>();
-            // node2DInstance.Name = enemy.Name;
-            //
-            // Control wrapper = new Control();
-            // wrapper.AddChild(node2DInstance);
-            // wrapper.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-            // wrapper.SizeFlagsVertical = Control.SizeFlags.Fill;
-            //
-            // enemy.Visual = node2DInstance;
             PlaceCharacter(enemyCells[index], enemy, AlliesContainer);
             index++;
-            // EnemiesContainer.AddChild(enemy);
         }
     }
     
@@ -66,6 +55,7 @@ public partial class BattleController : Node
         var warrior1 = WarriorScene.Instantiate<Character>();
         var priest = PriestScene.Instantiate<Character>();
         var warrior2 = WarriorScene.Instantiate<Character>();
+        warrior2.Name = "Warrior2";
         var mage = MageScene.Instantiate<Character>();
 
         return new Battle()
