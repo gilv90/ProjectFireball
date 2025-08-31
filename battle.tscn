@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwnqfvo8fco4w"]
+
+[ext_resource type="Script" uid="uid://b8aca3uhk1o0x" path="res://BattleController.cs" id="1_ip7xm"]
+[ext_resource type="PackedScene" uid="uid://dek0pwffytfg0" path="res://warrior.tscn" id="2_0npn6"]
+[ext_resource type="PackedScene" uid="uid://0ear3uhdy54o" path="res://mage.tscn" id="3_mhv3b"]
+[ext_resource type="PackedScene" uid="uid://b41jjg30l502e" path="res://priest.tscn" id="4_lcjiy"]
+
+[node name="Battle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BattleController" type="Node" parent="." node_paths=PackedStringArray("AlliesContainer", "EnemiesContainer", "LogLabel")]
+script = ExtResource("1_ip7xm")
+AlliesContainer = NodePath("../AlliesContainer")
+EnemiesContainer = NodePath("../EnemiesContainer")
+LogLabel = NodePath("../Log")
+WarriorScene = ExtResource("2_0npn6")
+MageScene = ExtResource("3_mhv3b")
+PriestScene = ExtResource("4_lcjiy")
+
+[node name="Log" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 24
+fit_content = true
+
+[node name="EnemiesContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="AlliesContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+alignment = 1

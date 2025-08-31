@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b41jjg30l502e"]
+
+[ext_resource type="Script" uid="uid://bqdhqj8cxmqau" path="res://Characters/Implementation/Priest.cs" id="1_wlvt7"]
+[ext_resource type="Texture2D" uid="uid://ct2apkj7ula6i" path="res://assets/chr_pawn_chemist.png" id="2_5dm71"]
+
+[node name="Priest" type="Node2D"]
+script = ExtResource("1_wlvt7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5dm71")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 128)
